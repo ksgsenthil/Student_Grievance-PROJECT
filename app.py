@@ -251,4 +251,8 @@ with app.app_context():
         db.session.commit()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    # For Render deployment, use the PORT environment variable
+    port = int(os.environ.get('PORT', 5000))
+    # Use 0.0.0.0 to make it accessible from outside Docker containers
+    app.run(host='0.0.0.0', port=port, debug=False)
