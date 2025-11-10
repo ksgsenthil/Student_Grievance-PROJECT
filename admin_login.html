@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WEB-BASED STUDENT GRIEVANCE SYSTEM - Admin Login</title>
+  <link rel="stylesheet" href="static/css/style.css" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1><i class="fas fa-user-shield"></i> Admin Login</h1>
+    </header>
+    <main class="main-content">
+      <div class="form-container">
+        <h2>Login as Admin</h2>
+        <form id="adminLoginForm" class="complaint-form" style="max-width:420px;">
+          <div class="form-group">
+            <label for="username">Username *</label>
+            <input type="text" id="username" name="username" required placeholder="admin" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input type="password" id="password" name="password" required placeholder="admin123" />
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+          <p class="text-center mt-20" style="color:#718096">Demo: admin / admin123</p>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const u = document.getElementById('username').value.trim();
+      const p = document.getElementById('password').value.trim();
+      if (u === 'admin' && p === 'admin123') {
+        localStorage.setItem('auth', JSON.stringify({ role: 'admin', username: u }));
+        // Redirect to main app; admin will be taken to View tab automatically
+        window.location.href = 'index.html';
+      } else {
+        alert('Invalid admin credentials');
+      }
+    });
+  </script>
+</body>
+</html>

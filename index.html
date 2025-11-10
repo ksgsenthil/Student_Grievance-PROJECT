@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEB BASED STUDENT GRIEVANCE SYSTEM</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-graduation-cap"></i> WEB BASED STUDENT GRIEVANCE SYSTEM</h1>
+            <nav class="nav-tabs" style="display:none;">
+                <button class="tab-btn active" data-tab="submit">Submit Complaint</button>
+                <button class="tab-btn" data-tab="view">View Complaints</button>
+                <button class="tab-btn" data-tab="dashboard">Dashboard</button>
+            </nav>
+            <div class="auth-actions" style="margin-top: 10px; display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                <span id="userInfo" class="hidden" style="color:#4a5568; font-weight:600;"></span>
+                <a id="userLoginLink" href="user_login.html" class="tab-btn" style="border-radius:8px; text-decoration:none;">User Login</a>
+                <a id="adminLoginLink" href="admin_login.html" class="tab-btn" style="border-radius:8px; text-decoration:none;">Admin Login</a>
+                <button id="loginBtn" class="tab-btn" style="border-radius:8px;">Login</button>
+                <button id="logoutBtn" class="tab-btn hidden" style="background:#e53e3e; color:#fff; border-color:#e53e3e; border-radius:8px;">Logout</button>
+                <button id="clearAllBtn" class="tab-btn hidden" style="background:#dd6b20; color:#fff; border-color:#dd6b20; border-radius:8px;">Clear All Complaints</button>
+            </div>
+        </header>
+
+        <!-- Landing only shows login links -->
+        <section class="landing-choice" style="margin: 40px 0; display:flex; gap:20px; justify-content:center; flex-wrap:wrap;">
+            <a href="user_login.html" class="tab-btn" style="padding:12px 20px; border-radius:10px; font-size:18px; text-decoration:none;">User Login</a>
+            <a href="admin_login.html" class="tab-btn" style="padding:12px 20px; border-radius:10px; font-size:18px; text-decoration:none;">Admin Login</a>
+        </section>
+
+        <main class="main-content" style="display:none;">
+            <!-- Submit Complaint Tab -->
+            <div id="submit" class="tab-content active">
+                <div class="form-container">
+                    <h2>Submit New Complaint</h2>
+                    <form id="complaintForm" class="complaint-form">
+                        <div class="form-group">
+                            <label for="complainantName">Student/Staff Name *</label>
+                            <input type="text" id="complainantName" name="complainantName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="studentId">Student/Employee ID *</label>
+                            <input type="text" id="studentId" name="studentId" required placeholder="e.g., STU2024001 or EMP001">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="userType">User Type *</label>
+                            <select id="userType" name="userType" required>
+                                <option value="">Select Type</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="staff">Staff</option>
+                                <option value="parent">Parent/Guardian</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="department">Department/Course *</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="computer-science">Computer Science</option>
+                                <option value="mca">MCA</option>
+                                <option value="electrical">Electrical Engineering</option>
+                                <option value="mechanical">Mechanical Engineering</option>
+                                <option value="civil">Civil Engineering</option>
+                                <option value="business">Business Administration</option>
+                                <option value="arts">Arts & Humanities</option>
+                                <option value="science">Science</option>
+                                <option value="mathematics">Mathematics</option>
+                                <option value="library">Library</option>
+                                <option value="administration">Administration</option>
+                                <option value="hostel">Hostel/Accommodation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number *</label>
+                            <input type="tel" id="phone" name="phone" required inputmode="numeric" pattern="[0-9]{10}" maxlength="10" title="Enter exactly 10 digits (0-9)" placeholder="10-digit number">
+                            <small style="color:#718096">Enter exactly 10 digits (no spaces or symbols)</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Complaint Category *</label>
+                            <select id="category" name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="academic">Academic Issues</option>
+                                <option value="faculty">Faculty/Teaching</option>
+                                <option value="infrastructure">Infrastructure/Facilities</option>
+                                <option value="hostel">Hostel/Accommodation</option>
+                                <option value="library">Library Services</option>
+                                <option value="canteen">Canteen/Food Services</option>
+                                <option value="transport">Transportation</option>
+                                <option value="fees">Fees/Financial</option>
+                                <option value="examination">Examination</option>
+                                <option value="harassment">Harassment/Bullying</option>
+                                <option value="discrimination">Discrimination</option>
+                                <option value="safety">Safety/Security</option>
+                                <option value="it-services">IT Services</option>
+                                <option value="administrative">Administrative</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="priority">Priority Level *</label>
+                            <select id="priority" name="priority" required>
+                                <option value="">Select Priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="description">Complaint Description *</label>
+                            <textarea id="description" name="description" rows="5" required placeholder="Please provide detailed information about your complaint..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="attachment">Attach File (Mandatory)</label>
+                            <input type="file" id="attachment" name="attachment" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Submit Complaint
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- View Complaints Tab -->
+            <div id="view" class="tab-content">
+                <div class="complaints-container">
+                    <h2>All Complaints</h2>
+                    <div class="filter-section">
+                        <input type="text" id="searchFilter" placeholder="Search complaints..." class="search-input">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                            <option value="closed">Closed</option>
+                        </select>
+                        <select id="categoryFilter" class="filter-select">
+                            <option value="">All Categories</option>
+                            <option value="academic">Academic Issues</option>
+                            <option value="faculty">Faculty/Teaching</option>
+                            <option value="infrastructure">Infrastructure/Facilities</option>
+                            <option value="hostel">Hostel/Accommodation</option>
+                            <option value="library">Library Services</option>
+                            <option value="canteen">Canteen/Food Services</option>
+                            <option value="transport">Transportation</option>
+                            <option value="fees">Fees/Financial</option>
+                            <option value="examination">Examination</option>
+                            <option value="harassment">Harassment/Bullying</option>
+                            <option value="discrimination">Discrimination</option>
+                            <option value="safety">Safety/Security</option>
+                            <option value="it-services">IT Services</option>
+                            <option value="administrative">Administrative</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div id="complaintsTable" class="complaints-table">
+                        <!-- Complaints will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content">
+                <div class="dashboard-container">
+                    <h2>Dashboard Overview</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="totalComplaints">0</h3>
+                                <p>Total Complaints</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="pendingComplaints">0</h3>
+                                <p>Pending</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon progress">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="inProgressComplaints">0</h3>
+                                <p>In Progress</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon resolved">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="resolvedComplaints">0</h3>
+                                <p>Resolved</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recent-complaints">
+                        <h3>Recent Complaints</h3>
+                        <div id="recentComplaintsList" class="recent-list">
+                            <!-- Recent complaints will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Success Message Modal -->
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div class="success-message">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Complaint Submitted Successfully!</h3>
+                    <p>Your complaint has been registered. Complaint ID: <span id="complaintId"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complaint Details Modal -->
+        <div id="detailsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="complaintDetails" class="complaint-details">
+                    <!-- Complaint details will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3 style="margin-bottom: 15px; color:#2d3748;">Login</h3>
+                <form id="loginForm" class="complaint-form" style="max-width:400px;">
+                    <div class="form-group">
+                        <label for="role">Role *</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <input type="text" id="username" name="username" required placeholder="e.g., user or admin">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <input type="password" id="password" name="password" required placeholder="e.g., user123 or admin123">
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <p class="text-center mt-20" style="color:#718096; font-size:14px;">Demo credentials — User: user/user123, Admin: admin/admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/app.js"></script>
+</body>
+</html>
